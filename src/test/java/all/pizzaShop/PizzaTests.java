@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
 import java.util.stream.Stream;
+
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class PizzaTests extends TestBase {
@@ -62,23 +64,30 @@ public class PizzaTests extends TestBase {
         var expectedResult = page.upButton;
         Assertions.assertTrue(expectedResult.isDisplayed(), errorMessage);
     }
-
-    private static Stream<Arguments> socialLinks() {
+    private static Stream<Arguments> indexAndUrl__links() {
         return Stream.of(
-                arguments("Facebook"),
-                arguments("ВКонтакте"),
-                arguments("Instagram")
+                arguments(3, "https://www.facebook.com/skillboxru"),
+                arguments(4, "https://vk.com/skillbox"),
+                arguments(5, "https://www.instagram.com/skillbox.ru/")
         );
     }
 
     @ParameterizedTest
-    @MethodSource("socialLinks")
-    public void moveToFooter__andClickSocialLink__Test(String link) {
+    @MethodSource("indexAndUrl__links")
+    public void moveToFooter__andClickSocialLinks__Test(int index, String url) {
         //arrange
         var page = new MainPage(driver, wait);
         page.open();
         //action
         page.scrollPageDown();
-        page.waitUpButton();
+        page.waitLastLink();
+        page.clickFooterLink(index);
+        //assert
+        var expectedUrl = url;
+        switchToFirstWindow();
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(2, getAllWindows().size(), "Вторая вкладка не открылась!"),
+                () -> Assertions.assertEquals(expectedUrl, driver.getCurrentUrl(), "Открылась не верная страница!")
+        );
     }
 }

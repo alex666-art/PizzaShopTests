@@ -30,6 +30,8 @@ public class MainPage extends Page {
     public WebElement orderButton;
     @FindBy(id = "ak-top")
     public WebElement upButton;
+    @FindBy(css = ".text-5-value:nth-child(5) > a")
+    public WebElement lastFooterLink;
 
     public MainPage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
@@ -42,6 +44,8 @@ public class MainPage extends Page {
     }
 
     public void waitUpButton() {wait.until(driver -> upButton.isDisplayed());}
+
+    public void waitLastLink() {wait.until(driver -> lastFooterLink.isDisplayed());}
 
     public void scrollCarouselForward(int index) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(getCardIndex(index)));
@@ -61,7 +65,11 @@ public class MainPage extends Page {
 
     public By getCardIndex(int index) {return By.cssSelector(String.format(".slick-slide:nth-of-type(%d)", index));}
 
-    public By getFooterLink(String value) {return By.linkText(String.format("(%d)", value));}
+    public By getFooterLink(int index) {return By.cssSelector(String.format(".text-5-value:nth-child(%d) > a", index));}
+
+    public void clickFooterLink(int index) {
+        driver.findElement(getFooterLink(index)).click();
+    }
 
     public Boolean forwardCardIsVisible() {
         if (forwardCard.isDisplayed()) {
