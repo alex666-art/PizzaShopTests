@@ -1,6 +1,7 @@
 package all.pizzaShop;
 
 import all.base.TestBase;
+import all.pizzaShop.pages.BasketPage;
 import all.pizzaShop.pages.MainPage;
 import all.pizzaShop.pages.PizzaPage;
 import org.junit.jupiter.api.Assertions;
@@ -151,7 +152,7 @@ public class PizzaTests extends TestBase {
     }
 
     @Test
-    public void pizzaPage__buyPizzaAndDisplayCardOnBasket__test() {
+    public void pizzaPage__addPizzaAndDisplayCardOnBasket__test() {
         //arrange
         var page = new PizzaPage(driver, wait);
         page.open();
@@ -160,5 +161,55 @@ public class PizzaTests extends TestBase {
         //assert
         var expectedResult = "[ 435,00₽ ]";
         Assertions.assertEquals(expectedResult, page.getPriceText(), "Товар не добавился в корзину!");
+    }
+
+    @Test
+    public void basketPage__buyPizzaAndAddCount__test() {
+        //arrange
+        var pizzaPage = new PizzaPage(driver, wait);
+        var basketPage = new BasketPage(driver, wait);
+        pizzaPage.open();
+        pizzaPage.addPizzaToTheBasket();
+        pizzaPage.goToBasketPage();
+        //action
+        basketPage.addCount();
+        //assert
+        Assertions.assertTrue(basketPage.refreshButtonIsEnabled(), "Колличество товаров не увеличилось!");
+    }
+
+    @Test
+    public void basketPage__buyPizzaAndSubtractCount__test() {
+        //arrange
+        var pizzaPage = new PizzaPage(driver, wait);
+        var basketPage = new BasketPage(driver, wait);
+        pizzaPage.open();
+        pizzaPage.addPizzaToTheBasket();
+        pizzaPage.goToBasketPage();
+        //action
+        basketPage.subtractCount();
+        //assert
+        Assertions.assertTrue(basketPage.refreshButtonIsEnabled(), "Колличество товаров не уменьшилось!");
+    }
+
+    @Test
+    public void basketPage__buyPizzaAddCountAndRefresh__test() {
+        //arrange
+        var pizzaPage = new PizzaPage(driver, wait);
+        var basketPage = new BasketPage(driver, wait);
+        pizzaPage.open();
+        pizzaPage.addTwoPizzaToTheBasket();
+        pizzaPage.goToBasketPage();
+        //action
+        basketPage.deleteCard();
+        basketPage.addCount();
+        basketPage.refreshBasket();
+        //assert
+        var expectedSize = "1";
+        Assertions.assertAll(
+                () -> Assertions.assertTrue(basketPage.refreshMessageIsDisplayed(), "Корзина не обновилась!"),
+                () -> Assertions.assertTrue(basketPage.goodsIsDisplayed(), "Не отображаются товары в корзине!"),
+                () -> Assertions.assertEquals(expectedSize, basketPage.getGoodsSize(), "Колличество товаров в корзине нее изменилось после удаления товара!")
+
+        );
     }
 }
