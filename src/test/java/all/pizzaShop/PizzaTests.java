@@ -1,9 +1,7 @@
 package all.pizzaShop;
 
 import all.base.TestBase;
-import all.pizzaShop.pages.BasketPage;
-import all.pizzaShop.pages.MainPage;
-import all.pizzaShop.pages.PizzaPage;
+import all.pizzaShop.pages.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -201,8 +199,6 @@ public class PizzaTests extends TestBase {
         pizzaPage.goToBasketPage();
         //action
         basketPage.deleteCard();
-        basketPage.addCount();
-        basketPage.refreshBasket();
         //assert
         var expectedSize = "1";
         Assertions.assertAll(
@@ -211,5 +207,38 @@ public class PizzaTests extends TestBase {
                 () -> Assertions.assertEquals(expectedSize, basketPage.getGoodsSize(), "Колличество товаров в корзине нее изменилось после удаления товара!")
 
         );
+    }
+
+    @Test
+    public void login__buyPizza__goToPayment__test() {
+        //arrange
+        var loginPage = new LoginPage(driver, wait);
+        var pizzaPage = new PizzaPage(driver, wait);
+        var basketPage = new BasketPage(driver, wait);
+        var orderPage = new OrderPage(driver, wait);
+        loginPage.open();
+        loginPage.login();
+        pizzaPage.open();
+        //action
+        pizzaPage.addPizzaToTheBasket();
+        pizzaPage.goToBasketPage();
+        basketPage.goToPayment();
+        //assert
+        var expectedTitle = "ОФОРМЛЕНИЕ ЗАКАЗА";
+        Assertions.assertEquals(expectedTitle, orderPage.getTitleText(), "Страница оплаты не открылась!");
+    }
+
+    @Test
+    public void basketPage__AddPizzaAndSetDiscountCoupon__test() {
+        //arrange
+        var pizzaPage = new PizzaPage(driver, wait);
+        var basketPage = new BasketPage(driver, wait);
+        pizzaPage.open();
+        pizzaPage.addPizzaToTheBasket();
+        pizzaPage.goToBasketPage();
+        //action
+        basketPage.setDiscountCoupon();
+        //assert
+        Assertions.assertTrue(basketPage.discountCard.isDisplayed(), "Скидка не применилась!");
     }
 }

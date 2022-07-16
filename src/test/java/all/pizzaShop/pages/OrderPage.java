@@ -1,4 +1,24 @@
 package all.pizzaShop.pages;
 
-public class OrderPage {
+import all.base.pages.Page;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class OrderPage extends Page {
+
+    @FindBy(css = ".post-title")
+    public WebElement pageTitle;
+
+    public OrderPage(WebDriver driver, WebDriverWait wait){
+        this.driver = driver;
+        this.wait = wait;
+        PageFactory.initElements(driver, this);
+    }
+
+    public String getTitleText() {
+        return pageTitle.getText();
+    }
 }

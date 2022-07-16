@@ -27,6 +27,14 @@ public class BasketPage extends Page {
     public WebElement deleteButton;
     @FindBy(css = ".blockUI")
     public WebElement loader;
+    @FindBy(css = ".checkout-button")
+    public WebElement checkOutButton;
+    @FindBy(id = "coupon_code")
+    public WebElement couponCodeField;
+    @FindBy(name = "apply_coupon")
+    public WebElement applyCoupon;
+    @FindBy(css = ".coupon-givemehalyava")
+    public WebElement discountCard;
 
     public BasketPage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
@@ -57,23 +65,36 @@ public class BasketPage extends Page {
         }
     }
 
-    public void refreshBasket() {refreshButton.click();}
-
     public Boolean refreshButtonIsEnabled() {
         wait.until(driver -> refreshButton.isDisplayed());
         return refreshButton.isEnabled();
     }
 
-    public Boolean refreshMessageIsDisplayed() {return refreshMessage.isDisplayed();}
-
-    public String getGoodsSize() {
-       return String.valueOf(goodsList.size());
+    public Boolean refreshMessageIsDisplayed() {
+        wait.until(driver -> !loader.isDisplayed());
+        return refreshMessage.isDisplayed();
     }
 
-    public Boolean goodsIsDisplayed() {return goods.isDisplayed();}
+    public String getGoodsSize() {
+        return String.valueOf(goodsList.size());
+    }
+
+    public Boolean goodsIsDisplayed() {
+        return goods.isDisplayed();
+    }
 
     public void deleteCard() {
         deleteButton.click();
         wait.until(driver -> !loader.isDisplayed());
     }
+
+    public void goToPayment() {
+        checkOutButton.click();
+    }
+
+    public void setDiscountCoupon() {
+        couponCodeField.sendKeys("GIVEMEHALYAVA");
+        applyCoupon.click();
+    }
+
 }
