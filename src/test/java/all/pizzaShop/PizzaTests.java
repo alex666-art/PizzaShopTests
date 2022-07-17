@@ -16,6 +16,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 public class PizzaTests extends TestBase {
 
     private String errorMessage = "Элемент не отображается!";
+    private String orderIsNotAddMessage = "Заказ не был оформлен!";
 
     @Test
     public void mainPage__scrollCarouselForward__andDisplayCard__test() {
@@ -240,5 +241,49 @@ public class PizzaTests extends TestBase {
         basketPage.setDiscountCoupon();
         //assert
         Assertions.assertTrue(basketPage.discountCard.isDisplayed(), "Скидка не применилась!");
+    }
+
+    @Test
+    public void buyPizza__goToPaymentAndSetOrderData__test() {
+        //arrange
+        var loginPage = new LoginPage(driver, wait);
+        var pizzaPage = new PizzaPage(driver, wait);
+        var basketPage = new BasketPage(driver, wait);
+        var orderPage = new OrderPage(driver, wait);
+        loginPage.open();
+        loginPage.login();
+        pizzaPage.open();
+        //action
+        pizzaPage.addPizzaToTheBasket();
+        pizzaPage.goToBasketPage();
+        basketPage.goToPayment();
+        orderPage.setDate("20.07.2022");
+        //assert
+        var expectedDate = "2022-07-20";
+        Assertions.assertEquals(expectedDate, orderPage.getDate(), "Не удалось установить дату доставки товара!");
+
+    }
+
+    @Test
+    public void buyPizza__goToPaymentAndSetOrderData__payGoods__test() {
+        //arrange
+        var loginPage = new LoginPage(driver, wait);
+        var pizzaPage = new PizzaPage(driver, wait);
+        var basketPage = new BasketPage(driver, wait);
+        var orderPage = new OrderPage(driver, wait);
+        loginPage.open();
+        loginPage.login();
+        pizzaPage.open();
+        //action
+        pizzaPage.addPizzaToTheBasket();
+        pizzaPage.goToBasketPage();
+        basketPage.goToPayment();
+        orderPage.setDataFieldOrder();
+        orderPage.submitOrder();
+        //assert
+        var expectedTitle = "Адрес для отправки чека";
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(expectedTitle, orderPage.getAddressDeliveryText(), "Заказ не юыл оплачен!")
+        );
     }
 }
