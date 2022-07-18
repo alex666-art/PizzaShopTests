@@ -36,6 +36,8 @@ public class PizzaPage extends Page {
     public WebElement goToBasketButton;
     @FindBy(linkText = "[ 435,00₽ ]")
     public WebElement price;
+    @FindBy(css = ".entry-title")
+    public WebElement pageTitle;
 
     public PizzaPage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
@@ -43,9 +45,7 @@ public class PizzaPage extends Page {
         PageFactory.initElements(driver, this);
     }
 
-    public void open() {
-        driver.navigate().to(url);
-    }
+    public void open() {driver.navigate().to(url);}
 
     public void setSorted(String value) {
         var sorted = new Select(sortedSelect);
@@ -62,9 +62,7 @@ public class PizzaPage extends Page {
         return author.getOptions().stream().map(element -> element.getText()).collect(Collectors.toList());
     }
 
-    public String getCardSize() {
-        return String.valueOf(productCardList.size());
-    }
+    public String getCardSize() {return String.valueOf(productCardList.size());}
 
     public void moveSlider() {
         for (int i = 0; i < 8; i++) {
@@ -72,17 +70,11 @@ public class PizzaPage extends Page {
         }
     }
 
-    public void waitTitle() {
-        wait.until(driver -> cardTitle.isDisplayed());
-    }
+    public void waitTitle() {wait.until(driver -> cardTitle.isDisplayed());}
 
-    public String getTitleText() {
-        return cardTitle.getText();
-    }
+    public String getTitleText() {return cardTitle.getText();}
 
-    public void addPizzaToTheBasket() {
-        buyFirstGoodsButton.click();
-    }
+    public void addPizzaToTheBasket() {buyFirstGoodsButton.click();}
 
     public void addTwoPizzaToTheBasket() {
         buyFirstGoodsButton.click();
@@ -96,4 +88,6 @@ public class PizzaPage extends Page {
     public void goToBasketPage() {
         goToBasketButton.click();
     }
+
+    public String getPageTitle() {return pageTitle.getText();}
 }
