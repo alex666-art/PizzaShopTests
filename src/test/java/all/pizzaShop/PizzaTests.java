@@ -8,6 +8,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -299,7 +301,7 @@ public class PizzaTests extends TestBase {
 
     @ParameterizedTest
     @MethodSource("headerCardsIndexAndTitle")
-    public void openHeaderCards__andDisplayCurrentPage__test(int index, String title) {
+    public void openHeaderCards__andDisplayCurrentPage__test(int index, String title) throws UnsupportedEncodingException {
         //arrange
         var headerPanel = new HeaderPanel(driver, wait);
         headerPanel.open();
@@ -332,7 +334,7 @@ public class PizzaTests extends TestBase {
     public void openPizzaCard__andDisplayCurrentPage__test() {
         //arrange
         var headerPanel = new HeaderPanel(driver, wait);
-        var pizzaPage = new PizzaPage(driver,wait);
+        var pizzaPage = new PizzaPage(driver, wait);
         headerPanel.open();
         //action
         headerPanel.openPizzaPage();
@@ -345,7 +347,7 @@ public class PizzaTests extends TestBase {
     public void openDessertCard__andDisplayCurrentPage__test() {
         //arrange
         var headerPanel = new HeaderPanel(driver, wait);
-        var pizzaPage = new PizzaPage(driver,wait);
+        var pizzaPage = new PizzaPage(driver, wait);
         headerPanel.open();
         //action
         headerPanel.openDessertPage();
@@ -358,12 +360,28 @@ public class PizzaTests extends TestBase {
     public void openDrinkCard__andDisplayCurrentPage__test() {
         //arrange
         var headerPanel = new HeaderPanel(driver, wait);
-        var pizzaPage = new PizzaPage(driver,wait);
+        var pizzaPage = new PizzaPage(driver, wait);
         headerPanel.open();
         //action
         headerPanel.openDrinkPage();
         //assert
         var expectedTitle = "НАПИТКИ";
         Assertions.assertEquals(expectedTitle, pizzaPage.getPageTitle(), "Вкладка не открылась!");
+    }
+
+    @Test
+    public void personalPage__loadFile__test() {
+        //arrange
+        var loginPage = new LoginPage(driver, wait);
+        var headerPanel = new HeaderPanel(driver, wait);
+        var personalPage = new PersonalPage(driver, wait);
+        loginPage.open();
+        loginPage.login();
+        headerPanel.clickHeaderCard(7);
+        //action
+        personalPage.personalDataClick();
+        personalPage.loadFile();
+        //assert
+        Assertions.assertTrue(personalPage.imageIsVisible(), "Изображение не загрузилось!");
     }
 }
