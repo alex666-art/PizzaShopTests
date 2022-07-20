@@ -33,8 +33,6 @@ public class OrderPage extends Page {
     public WebElement checkBoxTerms;
     @FindBy(id = "place_order")
     public WebElement submitOrderButton;
-    @FindBy(css = ".post-title")
-    public WebElement orderTitle;
     @FindBy(css = ".woocommerce-column__title")
     public WebElement addressDelivery;
 
@@ -71,15 +69,6 @@ public class OrderPage extends Page {
 
     public void submitOrder() {
         submitOrderButton.click();
-    }
-
-    public Boolean orderTitleIsDisplayed() {
-        wait.until(driver1 -> orderTitle.isDisplayed());
-        return orderTitle.isDisplayed();
-    }
-
-    public String getOrderTitleText() {
-        return orderTitle.getText();
     }
 
     public String getAddressDeliveryText() {
