@@ -1,5 +1,4 @@
 package all.pizzaShop;
-
 import all.base.TestBase;
 import all.pizzaShop.pages.*;
 import org.junit.jupiter.api.Assertions;
@@ -7,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -383,5 +380,30 @@ public class PizzaTests extends TestBase {
         personalPage.loadFile();
         //assert
         Assertions.assertTrue(personalPage.imageIsVisible(), "Изображение не загрузилось!");
+    }
+
+    @Test
+    public void bonusPage__addBonusCardSuccess__test() {
+        //arrange
+        var bonusPage = new BonusPage(driver, wait);
+        bonusPage.open();
+        //action
+        bonusPage.addBonusCard();
+        var alert = driver.switchTo().alert();
+        //assert
+        var expectedText = "Заявка отправлена, дождитесь, пожалуйста, оформления карты!";
+        Assertions.assertEquals(expectedText, alert.getText(), "Заявка на создание карты не была отправлена!");
+    }
+
+    @Test
+    public void DeliveryPage__openPageSuccess__test() {
+        //arrange
+        var deliveryPage = new DeliveryPage(driver, wait);
+        deliveryPage.open();
+        //action
+        deliveryPage.switchToIframe();
+        //assert
+        var expectedText = "Минимальная сумма заказа 800 рублей.";
+        Assertions.assertEquals(expectedText, deliveryPage.getTermsDeliveryText(), "Станица доставки не открылась!");
     }
 }
