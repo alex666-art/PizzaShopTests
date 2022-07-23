@@ -27,6 +27,7 @@ public class HeaderPanelTests extends TestBase {
         );
     }
 
+    //переход на страницы Акции, О Нас, Корзина, Мой Аккаунт и Бонусная Программа
     @ParameterizedTest
     @MethodSource("headerCardsIndexAndTitle")
     public void headerPanel__openHeaderCards__andDisplayCurrentPage__test(int index, String title) throws UnsupportedEncodingException {
@@ -40,6 +41,7 @@ public class HeaderPanelTests extends TestBase {
         Assertions.assertEquals(expectedTitle, headerPanel.getCurrentTitle(), "Вкладка не открылась!");
     }
 
+    //переход на страницу Оформления заказа
     @Test
     public void headerPanel__openOrderCard__andDisplayCurrentPage__test() {
         //arrange
@@ -58,6 +60,7 @@ public class HeaderPanelTests extends TestBase {
         Assertions.assertEquals(expectedTitle, headerPanel.getCurrentTitle(), "Вкладка не открылась!");
     }
 
+    //переход на страницу Пицца
     @Test
     public void headerPanel__openPizzaCard__andDisplayCurrentPage__test() {
         //arrange
@@ -71,6 +74,7 @@ public class HeaderPanelTests extends TestBase {
         Assertions.assertEquals(expectedTitle, pizzaPage.getPageTitle(), "Вкладка не открылась!");
     }
 
+    //переход на страницу Десерты
     @Test
     public void headerPanel__openDessertCard__andDisplayCurrentPage__test() {
         //arrange
@@ -84,6 +88,7 @@ public class HeaderPanelTests extends TestBase {
         Assertions.assertEquals(expectedTitle, pizzaPage.getPageTitle(), "Вкладка не открылась!");
     }
 
+    //переход на страницу Напитки
     @Test
     public void headerPanel__openDrinkCard__andDisplayCurrentPage__test() {
         //arrange

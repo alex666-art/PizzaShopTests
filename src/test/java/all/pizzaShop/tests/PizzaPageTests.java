@@ -24,7 +24,7 @@ public class PizzaPageTests extends TestBase {
                 arguments("price-desc", "По убыванию цены")
         );
     }
-
+    //проверки сортировок в разделе Пицца
     @ParameterizedTest
     @MethodSource("selectValues")
     public void pizzaPage__getSelectValue__test(String value, String expectedResult) {
@@ -40,7 +40,7 @@ public class PizzaPageTests extends TestBase {
                 () -> Assertions.assertTrue(page.productCards.isDisplayed(), "Карточки не отображаются!")
         );
     }
-
+    //проверка списка сортировок
     @Test
     public void pizzaPage__getSelectValues__test() {
         //arrange
@@ -52,6 +52,7 @@ public class PizzaPageTests extends TestBase {
         Assertions.assertEquals(expectedSorts, page.getSortedList(), "В списке сортировок присутствуют не все значения!");
     }
 
+    //проверка сортировки По цене
     @Test
     public void pizzaPage__getCardsSize__test() {
         //arrange
@@ -70,6 +71,7 @@ public class PizzaPageTests extends TestBase {
         );
     }
 
+    //добавление пиццы в корзину
     @Test
     public void pizzaPage__addPizzaAndDisplayCardOnBasket__test() {
         //arrange
@@ -78,7 +80,11 @@ public class PizzaPageTests extends TestBase {
         //action
         page.addPizzaToTheBasket();
         //assert
-        var expectedResult = "[ 435,00? ]";
-        Assertions.assertEquals(expectedResult, page.getPriceText(), "Товар не добавился в корзину!");
+        var expectedText = "Пицца \"4 в 1\"";
+        Assertions.assertAll(
+                () -> Assertions.assertTrue(page.goodsIsDisplayed(), "Товар не добавился в корзину!"),
+                () -> Assertions.assertEquals(expectedText, page.getPriceText(), "Не отображается добавленный товар в корзине!")
+        );
+
     }
 }

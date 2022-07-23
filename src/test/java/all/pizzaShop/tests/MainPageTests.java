@@ -16,6 +16,7 @@ public class MainPageTests extends TestBase {
 
     private String errorMessage = "Ёлемент не отображаетс€!";
 
+    //скрол карусели вправо и проверка отображени€ элемента
     @Test
     public void mainPage__scrollCarouselForward__andDisplayCard__test() {
         //arrange
@@ -28,6 +29,7 @@ public class MainPageTests extends TestBase {
         Assertions.assertTrue(expectedResult, errorMessage);
     }
 
+    //скрол карусели влево и проверка отображени€ элемента
     @Test
     public void mainPage__scrollCarouselBack__andDisplayCard__test() {
         //arrange
@@ -40,6 +42,7 @@ public class MainPageTests extends TestBase {
         Assertions.assertTrue(expectedResult, errorMessage);
     }
 
+    //скрол странцы к карточке Ќапитки, клик и проверка открыти€ страницы с Ќапитками
     @Test
     public void mainPage__moveToCard__click__andDisplayTitle__test() {
         //arrange
@@ -53,6 +56,7 @@ public class MainPageTests extends TestBase {
         Assertions.assertTrue(expectedResult.isDisplayed(), errorMessage);
     }
 
+    //скрол странцы к подвалу страницы, и проверка отобрадени€ кнопки "^"
     @Test
     public void mainPage__moveToFooter__andDisplayUpButton__test() {
         //arrange
@@ -74,6 +78,7 @@ public class MainPageTests extends TestBase {
         );
     }
 
+    //скрол странцы к подвалу страницы, и проверка перехода по ссылкам соцсетей
     @ParameterizedTest
     @MethodSource("indexAndUrl__links")
     public void mainPage__moveToFooter__andClickSocialLinks__test(int index, String url) {

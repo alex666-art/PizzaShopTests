@@ -96,5 +96,4 @@ public class BasketPage extends Page {
         couponCodeField.sendKeys("GIVEMEHALYAVA");
         applyCoupon.click();
     }
-
 }

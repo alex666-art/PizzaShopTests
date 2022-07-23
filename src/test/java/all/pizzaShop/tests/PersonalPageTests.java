@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 public class PersonalPageTests extends TestBase {
 
+    //проверка загрузки файла в личном кабинете
     @Test
     public void personalPage__loadFile__test() {
         //arrange

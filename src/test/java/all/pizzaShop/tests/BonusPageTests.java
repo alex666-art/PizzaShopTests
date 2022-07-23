@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 public class BonusPageTests extends TestBase {
 
+    //переход на страницу Создания бонусной карты, и создание карты
     @Test
     public void bonusPage__addBonusCardSuccess__test() {
         //arrange

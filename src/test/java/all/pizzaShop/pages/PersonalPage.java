@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class PersonalPage extends Page {
 
     private JavascriptExecutor javascriptExecutor;
-    @FindBy(linkText = "Данные аккаунта")
+    @FindBy(css = ".woocommerce-MyAccount-navigation-link--edit-account > a")
     public WebElement personalData;
     @FindBy(id = "uploadFile")
     public WebElement loadFile;

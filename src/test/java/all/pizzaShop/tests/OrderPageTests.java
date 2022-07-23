@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class OrderPageTests extends TestBase {
 
+    //предварительный логин в акк, добавление продукта в корзину, переход к оформлению заказа, проверка установки даты
     @Test
     public void orderPage__buyPizza__goToPaymentAndSetOrderData__test() {
         //arrange
@@ -31,6 +32,7 @@ public class OrderPageTests extends TestBase {
 
     }
 
+    //предварительный логин в акк, добавление продукта в корзину, переход к оформлению заказа, проверка установки даты, оформление заказа с методом оплаты наличными. Проверка отображения страницы - Ваш заказ оформлен
     @Test
     public void orderPage__buyPizza__goToPaymentAndSetOrderData__payGoods__test() {
         //arrange

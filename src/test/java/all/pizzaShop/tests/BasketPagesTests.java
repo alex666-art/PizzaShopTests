@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class BasketPagesTests extends TestBase {
 
+    //добавление товара в корзину и увеличение колличества товаров
     @Test
     public void basketPage__buyPizzaAndAddCount__test() {
         //arrange
@@ -17,13 +18,14 @@ public class BasketPagesTests extends TestBase {
         var basketPage = new BasketPage(driver, wait);
         pizzaPage.open();
         pizzaPage.addPizzaToTheBasket();
-        pizzaPage.goToBasketPage();
+        //pizzaPage.goToBasketPage();
         //action
         basketPage.addCount();
         //assert
         Assertions.assertTrue(basketPage.refreshButtonIsEnabled(), "Колличество товаров не увеличилось!");
     }
 
+    //добавление товара в корзину и уменьшение колличества товаров
     @Test
     public void basketPage__buyPizzaAndSubtractCount__test() {
         //arrange
@@ -31,13 +33,13 @@ public class BasketPagesTests extends TestBase {
         var basketPage = new BasketPage(driver, wait);
         pizzaPage.open();
         pizzaPage.addPizzaToTheBasket();
-        pizzaPage.goToBasketPage();
         //action
         basketPage.subtractCount();
         //assert
         Assertions.assertTrue(basketPage.refreshButtonIsEnabled(), "Колличество товаров не уменьшилось!");
     }
 
+    //добавление товаров в корзину, удаление одного товара, и обновление корзины
     @Test
     public void basketPage__buyPizzaAddCountAndRefresh__test() {
         //arrange
@@ -58,6 +60,7 @@ public class BasketPagesTests extends TestBase {
         );
     }
 
+    //добавление товара в корзину и переход на страницу оформления заказа
     @Test
     public void basketPage__login__buyPizza__goToPayment__test() {
         //arrange
@@ -70,13 +73,13 @@ public class BasketPagesTests extends TestBase {
         pizzaPage.open();
         //action
         pizzaPage.addPizzaToTheBasket();
-        pizzaPage.goToBasketPage();
         basketPage.goToPayment();
         //assert
         var expectedTitle = "ОФОРМЛЕНИЕ ЗАКАЗА";
         Assertions.assertEquals(expectedTitle, orderPage.getTitleText(), "Страница оплаты не открылась!");
     }
 
+    //добавление товара и применение купона
     @Test
     public void basketPage__basketPage__AddPizzaAndSetDiscountCoupon__test() {
         //arrange
@@ -84,7 +87,6 @@ public class BasketPagesTests extends TestBase {
         var basketPage = new BasketPage(driver, wait);
         pizzaPage.open();
         pizzaPage.addPizzaToTheBasket();
-        pizzaPage.goToBasketPage();
         //action
         basketPage.setDiscountCoupon();
         //assert

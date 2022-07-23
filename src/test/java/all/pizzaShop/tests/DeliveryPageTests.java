@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 public class DeliveryPageTests extends TestBase {
 
+    //переход на страницу Доставки. Поиск строки "Минимальная сумма заказа 800 рублей."
     @Test
     public void DeliveryPage__openPageSuccess__test() {
         //arrange
