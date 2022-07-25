@@ -1,4 +1,5 @@
 package all.pizzaShop.pages;
+
 import all.base.pages.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -43,9 +44,13 @@ public class MainPage extends Page {
         driver.navigate().to(url);
     }
 
-    public void waitUpButton() {wait.until(driver -> upButton.isDisplayed());}
+    public void waitUpButton() {
+        wait.until(driver -> upButton.isDisplayed());
+    }
 
-    public void waitLastLink() {wait.until(driver -> lastFooterLink.isDisplayed());}
+    public void waitLastLink() {
+        wait.until(driver -> lastFooterLink.isDisplayed());
+    }
 
     public void scrollCarouselForward(int index) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(getCardIndex(index)));
@@ -63,19 +68,20 @@ public class MainPage extends Page {
                 .perform();
     }
 
-    public By getCardIndex(int index) {return By.cssSelector(String.format(".slick-slide:nth-of-type(%d)", index));}
+    public By getCardIndex(int index) {
+        return By.cssSelector(String.format(".slick-slide:nth-of-type(%d)", index));
+    }
 
-    public By getFooterLink(int index) {return By.cssSelector(String.format(".text-5-value:nth-child(%d) > a", index));}
+    public By getFooterLink(int index) {
+        return By.cssSelector(String.format(".text-5-value:nth-child(%d) > a", index));
+    }
 
     public void clickFooterLink(int index) {
         driver.findElement(getFooterLink(index)).click();
     }
 
     public Boolean forwardCardIsVisible() {
-        if (forwardCard.isDisplayed()) {
-            return true;
-        } else
-            return false;
+        return forwardCard.isDisplayed();
     }
 
     public Boolean backCardIsVisible() {

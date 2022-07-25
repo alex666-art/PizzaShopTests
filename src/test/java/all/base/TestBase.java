@@ -46,8 +46,8 @@ public class TestBase {
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         driver = new ChromeDriver(options);
         initialWindow = driver.getWindowHandle();
-        wait = new WebDriverWait(driver, 5);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        wait = new WebDriverWait(driver, 10);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @AfterEach
